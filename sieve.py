@@ -3,7 +3,7 @@ import math
 
 def sieve(primes, factor):
     for n in range(2 * factor, len(primes) , factor):
-        primes[n] = 0
+        primes[n] = False
 
 def main(argv):
     if len(argv) != 2:
@@ -13,12 +13,12 @@ def main(argv):
     if n < 2:
         raise ValueError('The integer limit must be greater than or equal to'
                          ' two.')
-    primes = [i for i in range(n + 1)]
+    primes = [True for i in range(n + 1)]
     primes[1] = 0
     for x in range(2,int(1 + math.sqrt(n))) :
-        if primes[x] != 0:
+        if primes[x]:
             sieve(primes, x)
-    print('\n'.join([str(p) for p in primes if p != 0]))
+    print('\n'.join([str(p) for p in range(2, n+1) if primes[p]]))
 
 
 if __name__ == '__main__':

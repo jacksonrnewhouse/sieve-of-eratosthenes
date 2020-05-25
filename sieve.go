@@ -4,6 +4,7 @@ import (
 	"os"
 	"fmt"
 	"strconv"
+	"math"
 )
 
 func main() {
@@ -23,31 +24,20 @@ func main() {
 		fmt.Println("The integer limit must be greater than or equal to two.")
 	}
 
-	var primes []int
-
-	for i := 2; i <= n; i++ {
-		primes = append(primes, i)
-	}
-
-	for i := 0; i < len(primes); i++ {
-		if primes[i] != 0 {
-			sieve(primes, primes[i])
-		}
-	}
-
-	for i := 0; i < len(primes); i++ {
-		if primes[i] != 0 {
-			fmt.Println(primes[i])
-		}
-	}
-}
-
-func sieve(primes []int, factor int) {
-	for index, value := range(primes) {
-		if value != 0 && value != factor {
-			if value % factor == 0 {
-				primes[index] = 0
+	composites := make([]bool, n+1)
+        composites[0] = true
+	composites[1] = true
+	for i := 2; i < int(math.Sqrt(float64(n))) + 1; i++ {
+		if !composites[i] {
+			for x := i * 2; x <= n; x+=i {
+				composites[x] = true
 			}
+		}
+	}
+
+	for i := 0; i <= n; i++ {
+		if !composites[i] {
+			fmt.Println(i)
 		}
 	}
 }
